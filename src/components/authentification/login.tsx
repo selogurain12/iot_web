@@ -7,21 +7,13 @@ import { Input } from "../ui/input";
 import { CardFooter } from "../ui/cards/card-footer";
 import { Button } from "../ui/button";
 
-export function Register() {
+export function Login() {
     return(
         <Card>
           <CardHeader>
-            <CardTitle>S'inscrire</CardTitle>
+            <CardTitle>Se connecter</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="firstName">Prénom</Label>
-              <Input id="firstName" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="lastName">Nom</Label>
-              <Input id="lastName" />
-            </div>
             <div className="space-y-1">
               <Label htmlFor="email">Email</Label>
               <Input id="email" />
@@ -32,7 +24,7 @@ export function Register() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button>S'inscrire</Button>
+            <Button>Se connecter</Button>
           </CardFooter>
         </Card>
     )
