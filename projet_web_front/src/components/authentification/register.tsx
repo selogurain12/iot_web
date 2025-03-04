@@ -8,8 +8,11 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { CardFooter } from "../ui/cards/card-footer";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export function Register() {
+  const naviage = useNavigate();
     const [firstname, setfirstname] = useState("");
     const [name, setname] = useState("");
     const [email, setEmail] = useState("");
@@ -17,17 +20,22 @@ export function Register() {
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
+        const created_at = new Date().toLocaleString("fr-FR", {
+          timeZone: "Europe/Paris",
+          hour12: false,
+      });
 
         try {
-            const response = await axios.post("http://localhost:3001/users", {
+            await axios.post("http://localhost:3001/users", {
                 firstname,
                 name,
                 email,
                 password,
-                created_at : new Date().toDateString(),
+                created_at,
             });
 
-            console.log("Réponse de l'API:", response.data);
+            toast.success("Vous êtes bien inscrit")
+            naviage("/userlist")
         } catch (error) {
             console.error("Erreur lors de l'envoi des données:", error);
         }
@@ -70,7 +78,7 @@ export function Register() {
                         id="password"
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)} // Met à jour l'état
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
             </CardContent>
