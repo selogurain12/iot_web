@@ -60,10 +60,10 @@ const userExists = async (id) => {
 };
 
 // Ajoute un utilisateur
-const createUser = async (id, email, firstname, name, created_at, password) => {
+const createUser = async (email, firstname, name, created_at, password) => {
     return await sql`
-      INSERT INTO "users" (id, email, firstname,name, created_at, password, role)
-      VALUES (${id}, ${email},  ${firstname}, ${name}, ${created_at}, ${password}, 'user')
+      INSERT INTO "users" (email, firstname,name, created_at, password, role)
+      VALUES (${email},  ${firstname}, ${name}, ${created_at}, ${password}, 'user')
       RETURNING *`;
 };
 
