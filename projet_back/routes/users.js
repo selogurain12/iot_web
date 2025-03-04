@@ -17,16 +17,17 @@ router.get("/", async (req, res) => {
 // Route pour ajouter un utilisateur
 router.post("/", async (req, res) => {
     try {
-        const { id, email, name, created_at } = req.body;
-        if (!id) return res.status(400).json({ error: "id est requis" });
+        const { email, name, created_at, password } = req.body;
         if (!email) return res.status(400).json({ error: "email est requis" });
         if (!name) return res.status(400).json({ error: "name est requis" });
         if (!created_at) return res.status(400).json({ error: "created_at est requis" });
+        if (!password) return res.status(400).json({ error: "password est requis" });
 
-        const existingUser = await userExists(id);
-        if (existingUser) return res.status(409).json({ error: "Cet utilisateur existe déjà" });
+        // check if user already exists
+        const exists = await userExists(email);
+        if (exists) return res.status(400).json({ error: "Cet utilisateur existe déjà" });
 
-        const newUser = await createUser(id, email, name, created_at);
+        const newUser = await createUser(email, name, created_at, password);
         res.status(201).json(newUser[0]);
     } catch (error) {
         errorHandler(res, error);
