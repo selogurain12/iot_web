@@ -6,14 +6,17 @@ const getUserByIdBd = async (id_bd) => {
         SELECT 
             u.id,
             u.email,
+            u.firstname,
             u.name,
             u.created_at,
+            u.password,
+            u.role,
         FROM 
             "users" u
         WHERE 
             u.id = ${id_bd}
         GROUP BY 
-            u.id, u.email, u.name, u.created_at;
+            u.id, u.email, u.firstname, u.name, u.created_at, u.password, u.role;
       `;
 
     if (users.length === 0) {
@@ -22,17 +25,20 @@ const getUserByIdBd = async (id_bd) => {
     var user = {
         id: users[0].id,
         email: users[0].email,
+        firstname: users[0].firstname,
         name: users[0].name,
-        created_at: users[0].created_at
+        created_at: users[0].created_at,
+        password: users[0].password,
+        role: users[0].role
     };
 
     return user;
 };
 
 // Récupère une liste de User par le name
-const getUsersByName = async (name) => {
+const getUsersByEmail = async (email) => {
     const users = await sql`
-        SELECT * FROM "users" WHERE name LIKE ${name};
+        SELECT * FROM "users" WHERE email LIKE ${email};
       `;
     return users;
 };
@@ -46,19 +52,19 @@ const getAllUsers = async () => {
 };
 
 // Vérifie si un utilisateur existe
-const userExists = async (id) => {
+const userExists = async (email) => {
     const user = await sql`
-        SELECT * FROM "users" WHERE id = ${id};
+        SELECT * FROM "users" WHERE email = ${email};
       `;
     return user.length > 0;
 };
 
 // Ajoute un utilisateur
-const createUser = async (id, email, name, created_at) => {
+const createUser = async (email, firstname, name, created_at, password) => {
     return await sql`
-      INSERT INTO "users" (id, email, name, created_at)
-      VALUES (${id}, ${email}, ${name}, ${created_at})
+      INSERT INTO "users" (email, firstname,name, created_at, password, role)
+      VALUES (${email},  ${firstname}, ${name}, ${created_at}, ${password}, 'user')
       RETURNING *`;
 };
 
-module.exports = { getUserByIdBd, userExists, createUser, getUsersByName, getAllUsers };
+module.exports = { getUserByIdBd, userExists, createUser, getUsersByEmail, getAllUsers };
