@@ -15,7 +15,7 @@ export function Register() {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
-              <Label htmlFor="firstName">Prénom</Label>
+              <Label htmlFor="firstName">Préno</Label>
               <Input id="firstName" />
             </div>
             <div className="space-y-1">
