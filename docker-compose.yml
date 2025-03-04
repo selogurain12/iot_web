@@ -2,7 +2,6 @@ services:
   db:
     image: postgres
     restart: always
-    # set shared memory limit when using docker-compose
     shm_size: 128mb
     environment:
       POSTGRES_PASSWORD: Y9uYMwWFZFeWbADB
@@ -23,5 +22,3 @@ services:
       - ALLOW_ANONYMOUS=0
       - MQTT_USER=mosquitto
       - MQTT_PASSWORD=mosquitto
-
-
