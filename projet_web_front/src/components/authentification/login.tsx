@@ -6,6 +6,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { CardFooter } from "../ui/cards/card-footer";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 export function Login() {
     return(
@@ -24,7 +25,9 @@ export function Login() {
             </div>
           </CardContent>
           <CardFooter>
+            <Link to="/userlist">
             <Button>Se connecter</Button>
+            </Link>
           </CardFooter>
         </Card>
     )
