@@ -40,6 +40,7 @@
     "cmdk": "^1.0.4",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.5.2",
+    "iot": "file:",
     "lodash": "^4.17.21",
     "lucide-react": "^0.477.0",
     "motion": "^12.4.7",
