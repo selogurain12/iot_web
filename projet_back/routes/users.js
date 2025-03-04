@@ -1,4 +1,5 @@
 const express = require('express');
+const client = require('../services/db');
 const router = express.Router();
 const { getUserByIdBd, userExists, createUser, getUsersByEmail, getAllUsers } = require('../services/usersService');
 const errorHandler = require("../utils/errorHandler");
@@ -8,7 +9,7 @@ const sql = require("../services/db");
 router.get("/", async (req, res) => {
     try {
         const users = await getAllUsers();
-        res.json(users);
+        res.json(users.rows);
     } catch (error) {
         errorHandler(res, error);
     }

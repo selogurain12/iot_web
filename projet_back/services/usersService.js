@@ -1,3 +1,4 @@
+const client = require("./db");
 const sql = require("./db");
 
 // Récupère un utilisateur via son ID en base de données
@@ -45,10 +46,7 @@ const getUsersByEmail = async (email) => {
 
 // Récupère tous les users
 const getAllUsers = async () => {
-    const users = await sql`
-        SELECT * FROM "users";
-      `;
-    return users;
+    return await client.query('SELECT * FROM users');
 };
 
 // Vérifie si un utilisateur existe
