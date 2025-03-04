@@ -1,3 +1,4 @@
+const client = require("./db");
 const sql = require("./db");
 
 // Récupère un utilisateur via son ID en base de données
@@ -45,10 +46,7 @@ const getUsersByEmail = async (email) => {
 
 // Récupère tous les users
 const getAllUsers = async () => {
-    const users = await sql`
-        SELECT * FROM "users";
-      `;
-    return users;
+    return await client.query('SELECT * FROM users');
 };
 
 // Vérifie si un utilisateur existe
@@ -60,10 +58,10 @@ const userExists = async (email) => {
 };
 
 // Ajoute un utilisateur
-const createUser = async (email, firstname, name, created_at, password) => {
+const createUser = async (email, firstname, name, password) => {
     return await sql`
-      INSERT INTO "users" (email, firstname,name, created_at, password, role)
-      VALUES (${email},  ${firstname}, ${name}, ${created_at}, ${password}, 'user')
+      INSERT INTO "users" (email, firstname, name, password, role)
+      VALUES (${email},  ${firstname}, ${name}, ${password}, 'user')
       RETURNING *`;
 };
 

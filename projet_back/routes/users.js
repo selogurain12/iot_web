@@ -1,4 +1,5 @@
 const express = require('express');
+const client = require('../services/db');
 const router = express.Router();
 const { getUserByIdBd, userExists, createUser, getUsersByEmail, getAllUsers } = require('../services/usersService');
 const errorHandler = require("../utils/errorHandler");
@@ -8,7 +9,7 @@ const sql = require("../services/db");
 router.get("/", async (req, res) => {
     try {
         const users = await getAllUsers();
-        res.json(users);
+        res.json(users.rows);
     } catch (error) {
         errorHandler(res, error);
     }
@@ -21,14 +22,13 @@ router.post("/", async (req, res) => {
         if (!email) return res.status(400).json({ error: "email est requis" });
         if (!firstname) return res.status(400).json({ error: "firstname est requis" });
         if (!name) return res.status(400).json({ error: "name est requis" });
-        if (!created_at) return res.status(400).json({ error: "created_at est requis" });
         if (!password) return res.status(400).json({ error: "password est requis" });
 
         // check if user already exists
         const exists = await userExists(email);
         if (exists) return res.status(400).json({ error: "Cet utilisateur existe déjà" });
 
-        const newUser = await createUser(email, firstname, name, created_at, password);
+        const newUser = await createUser(email, firstname, name, password);
         res.status(201).json(newUser[0]);
     } catch (error) {
         errorHandler(res, error);
