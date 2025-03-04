@@ -36,9 +36,9 @@ const getUserByIdBd = async (id_bd) => {
 };
 
 // Récupère une liste de User par le name
-const getUsersByName = async (name) => {
+const getUsersByName = async (email) => {
     const users = await sql`
-        SELECT * FROM "users" WHERE name LIKE ${name};
+        SELECT * FROM "users" WHERE email LIKE ${email};
       `;
     return users;
 };
