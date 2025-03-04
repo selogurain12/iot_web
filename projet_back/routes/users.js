@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUserByIdBd, userExists, createUser, getUsersByName, getAllUsers } = require('../services/usersService');
+const { getUserByIdBd, userExists, createUser, getUsersByEmail, getAllUsers } = require('../services/usersService');
 const errorHandler = require("../utils/errorHandler");
 const sql = require("../services/db");
 
@@ -17,8 +17,9 @@ router.get("/", async (req, res) => {
 // Route pour ajouter un utilisateur
 router.post("/", async (req, res) => {
     try {
-        const { email, name, created_at, password } = req.body;
+        const { email, firstname, name, created_at, password } = req.body;
         if (!email) return res.status(400).json({ error: "email est requis" });
+        if (!firstname) return res.status(400).json({ error: "firstname est requis" });
         if (!name) return res.status(400).json({ error: "name est requis" });
         if (!created_at) return res.status(400).json({ error: "created_at est requis" });
         if (!password) return res.status(400).json({ error: "password est requis" });
@@ -27,7 +28,7 @@ router.post("/", async (req, res) => {
         const exists = await userExists(email);
         if (exists) return res.status(400).json({ error: "Cet utilisateur existe déjà" });
 
-        const newUser = await createUser(email, name, created_at, password);
+        const newUser = await createUser(email, firstname, name, created_at, password);
         res.status(201).json(newUser[0]);
     } catch (error) {
         errorHandler(res, error);
@@ -50,9 +51,9 @@ router.get("/:id", async (req, res) => {
 });
 
 // Route pour récupérer une liste d'utilisateurs par nom
-router.get("/name/:name", async (req, res) => {
+router.get("/email/:email", async (req, res) => {
     try {
-        const users = await getUsersByName(req.params.name);
+        const users = await getUsersByEmail(req.params.email);
         res.json(users);
     } catch (error) {
         errorHandler(res, error);
@@ -60,9 +61,9 @@ router.get("/name/:name", async (req, res) => {
 });
 
 // Route pour vérifier si un utilisateur existe
-router.get("/exists/:id", async (req, res) => {
+router.get("/exists/:email", async (req, res) => {
     try {
-        const exists = await userExists(req.params.id);
+        const exists = await userExists(req.params.email);
         res.json({ exists });
     } catch (error) {
         errorHandler(res, error);

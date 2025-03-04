@@ -36,9 +36,9 @@ const getUserByIdBd = async (id_bd) => {
 };
 
 // Récupère une liste de User par le name
-const getUsersByName = async (name) => {
+const getUsersByEmail = async (email) => {
     const users = await sql`
-        SELECT * FROM "users" WHERE name LIKE ${name};
+        SELECT * FROM "users" WHERE email LIKE ${email};
       `;
     return users;
 };
@@ -52,9 +52,9 @@ const getAllUsers = async () => {
 };
 
 // Vérifie si un utilisateur existe
-const userExists = async (id) => {
+const userExists = async (email) => {
     const user = await sql`
-        SELECT * FROM "users" WHERE id = ${id};
+        SELECT * FROM "users" WHERE email = ${email};
       `;
     return user.length > 0;
 };
@@ -67,4 +67,4 @@ const createUser = async (email, firstname, name, created_at, password) => {
       RETURNING *`;
 };
 
-module.exports = { getUserByIdBd, userExists, createUser, getUsersByName, getAllUsers };
+module.exports = { getUserByIdBd, userExists, createUser, getUsersByEmail, getAllUsers };
