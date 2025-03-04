@@ -6,6 +6,7 @@ const getUserByIdBd = async (id_bd) => {
         SELECT 
             u.id,
             u.email,
+            u.firstname,
             u.name,
             u.created_at,
             u.password,
@@ -15,7 +16,7 @@ const getUserByIdBd = async (id_bd) => {
         WHERE 
             u.id = ${id_bd}
         GROUP BY 
-            u.id, u.email, u.name, u.created_at, u.password, u.role;
+            u.id, u.email, u.firstname, u.name, u.created_at, u.password, u.role;
       `;
 
     if (users.length === 0) {
@@ -24,6 +25,7 @@ const getUserByIdBd = async (id_bd) => {
     var user = {
         id: users[0].id,
         email: users[0].email,
+        firstname: users[0].firstname,
         name: users[0].name,
         created_at: users[0].created_at,
         password: users[0].password,
@@ -58,10 +60,10 @@ const userExists = async (id) => {
 };
 
 // Ajoute un utilisateur
-const createUser = async (id, email, name, created_at, password) => {
+const createUser = async (id, email, firstname, name, created_at, password) => {
     return await sql`
-      INSERT INTO "users" (id, email, name, created_at, password, role)
-      VALUES (${id}, ${email}, ${name}, ${created_at}, ${password}, 'user')
+      INSERT INTO "users" (id, email, firstname,name, created_at, password, role)
+      VALUES (${id}, ${email},  ${firstname}, ${name}, ${created_at}, ${password}, 'user')
       RETURNING *`;
 };
 
