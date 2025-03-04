@@ -13,6 +13,7 @@ app.use(express.json());
 // Créer un utilisateur
 app.post('/users', async (req, res) => {
   const { email, name } = req.body;
+  
   const result = await pool.query(
     'INSERT INTO users (email, name) VALUES ($1, $2) RETURNING *',
     [email, name]
