@@ -2,14 +2,7 @@ services:
   db:
     image: postgres
     restart: always
-    # set shared memory limit when using docker-compose
     shm_size: 128mb
-    # or set shared memory limit when deploy via swarm stack
-    #volumes:
-    #  - type: tmpfs
-    #    target: /dev/shm
-    #    tmpfs:
-    #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
       POSTGRES_PASSWORD: Y9uYMwWFZFeWbADB
     ports:
@@ -27,5 +20,3 @@ services:
       - ALLOW_ANONYMOUS=0
       - MQTT_USER=mosquitto
       - MQTT_PASSWORD=mosquitto
-
-
