@@ -36,7 +36,7 @@ const getUserByIdBd = async (id_bd) => {
 };
 
 // Récupère une liste de User par le name
-const getUsersByName = async (email) => {
+const getUsersByEmail = async (email) => {
     const users = await sql`
         SELECT * FROM "users" WHERE email LIKE ${email};
       `;
@@ -67,4 +67,4 @@ const createUser = async (email, firstname, name, created_at, password) => {
       RETURNING *`;
 };
 
-module.exports = { getUserByIdBd, userExists, createUser, getUsersByName, getAllUsers };
+module.exports = { getUserByIdBd, userExists, createUser, getUsersByEmail, getAllUsers };

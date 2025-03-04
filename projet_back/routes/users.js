@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUserByIdBd, userExists, createUser, getUsersByName: getUsersByEmail, getAllUsers } = require('../services/usersService');
+const { getUserByIdBd, userExists, createUser, getUsersByEmail, getAllUsers } = require('../services/usersService');
 const errorHandler = require("../utils/errorHandler");
 const sql = require("../services/db");
 
