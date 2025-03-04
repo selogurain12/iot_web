@@ -61,9 +61,9 @@ router.get("/email/:email", async (req, res) => {
 });
 
 // Route pour vérifier si un utilisateur existe
-router.get("/exists/:id", async (req, res) => {
+router.get("/exists/:email", async (req, res) => {
     try {
-        const exists = await userExists(req.params.id);
+        const exists = await userExists(req.params.email);
         res.json({ exists });
     } catch (error) {
         errorHandler(res, error);

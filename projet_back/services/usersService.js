@@ -52,9 +52,9 @@ const getAllUsers = async () => {
 };
 
 // Vérifie si un utilisateur existe
-const userExists = async (id) => {
+const userExists = async (email) => {
     const user = await sql`
-        SELECT * FROM "users" WHERE id = ${id};
+        SELECT * FROM "users" WHERE email = ${email};
       `;
     return user.length > 0;
 };
